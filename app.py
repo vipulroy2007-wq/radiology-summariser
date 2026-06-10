@@ -54,14 +54,4 @@ def health():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=False)
-@app.route("/debug", methods=["GET"])
-def debug():
-    base = os.path.dirname(os.path.abspath(__file__))
-    model_path = os.path.join(base, "final_model")
-    return jsonify({
-        "base_dir": base,
-        "model_path": model_path,
-        "base_dir_contents": os.listdir(base),
-        "model_exists": os.path.exists(model_path),
-        "model_contents": os.listdir(model_path) if os.path.exists(model_path) else "NOT FOUND"
-    })
+

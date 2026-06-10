@@ -6,7 +6,7 @@ import os
 app = Flask(__name__)
 
 # ── Full Windows path to your model ───────────────────────────
-MODEL_PATH = r"C:\Documents\AI Project\Project_1\final_model"  # ← update if different
+MODEL_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "final_model")
 
 # ── Load model at startup ──────────────────────────────────────
 print("Loading tokenizer...")

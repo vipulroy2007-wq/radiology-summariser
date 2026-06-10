@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+
+# Data (too large for GitHub)
+reports/
+*.tgz
+
+# Keep only final model, not training checkpoints
+model_output/

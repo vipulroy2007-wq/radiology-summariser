@@ -10,4 +10,4 @@ reports/
 *.tgz
 
 # Keep only final model, not training checkpoints
-model_output/
+model_output/Project_1/final_model/model.safetensors 

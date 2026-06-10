@@ -11,3 +11,8 @@ reports/
 
 # Keep only final model, not training checkpoints
 model_output/Project_1/final_model/model.safetensors 
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

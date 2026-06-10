@@ -13,12 +13,9 @@ model = None
 def load_model():
     global tokenizer, model
     if model is None:
-        print("Loading tokenizer...")
         tokenizer = BartTokenizer.from_pretrained("facebook/bart-base")
-        print("Loading model...")
         model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_PATH)
         model.eval()
-        print("Model loaded")
 
 def summarise(text, max_length=60, min_length=5):
     load_model()
@@ -54,4 +51,3 @@ def health():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=False)
-

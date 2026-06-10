@@ -7,18 +7,16 @@ app = Flask(__name__)
 
 MODEL_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "final_model")
 
-tokenizer = None
-model = None
+print("Loading tokenizer...")
+tokenizer = BartTokenizer.from_pretrained("facebook/bart-base")
+print("Tokenizer loaded")
 
-def load_model():
-    global tokenizer, model
-    if model is None:
-        tokenizer = BartTokenizer.from_pretrained("facebook/bart-base")
-        model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_PATH)
-        model.eval()
+print("Loading model...")
+model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_PATH)
+model.eval()
+print("Model loaded and ready")
 
 def summarise(text, max_length=60, min_length=5):
-    load_model()
     inputs = tokenizer(
         text,
         return_tensors="pt",

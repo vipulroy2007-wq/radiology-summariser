@@ -13,7 +13,6 @@ summariser = pipeline(
 print("Model loaded and ready")
 
 def summarise(text):
-    # Truncate long inputs to speed up inference
     words = text.split()
     if len(words) > 100:
         text = " ".join(words[:100])
@@ -27,7 +26,7 @@ def summarise(text):
         max_length=max_len,
         min_length=min_len,
         do_sample=False,
-        num_beams=2  # Faster than default 4
+        num_beams=2  
     )
     return result[0]["summary_text"]
 

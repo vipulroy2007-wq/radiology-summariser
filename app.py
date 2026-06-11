@@ -1,37 +1,25 @@
 from flask import Flask, request, jsonify
-from transformers import BartTokenizer, AutoModelForSeq2SeqLM
-import torch
+from transformers import pipeline
 import os
 
 app = Flask(__name__)
 
-MODEL_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "final_model")
-
-print("Loading tokenizer...")
-tokenizer = BartTokenizer.from_pretrained("facebook/bart-base")
-print("Tokenizer loaded")
-
 print("Loading model...")
-model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_PATH)
-model.eval()
+summariser = pipeline(
+    "summarization",
+    model="sshleifer/distilbart-cnn-6-6",
+    tokenizer="sshleifer/distilbart-cnn-6-6"
+)
 print("Model loaded and ready")
 
 def summarise(text, max_length=60, min_length=5):
-    inputs = tokenizer(
+    result = summariser(
         text,
-        return_tensors="pt",
-        max_length=512,
-        truncation=True
+        max_length=max_length,
+        min_length=min_length,
+        do_sample=False
     )
-    with torch.no_grad():
-        output = model.generate(
-            inputs["input_ids"],
-            max_length=max_length,
-            min_length=min_length,
-            num_beams=4,
-            early_stopping=True
-        )
-    return tokenizer.decode(output[0], skip_special_tokens=True)
+    return result[0]["summary_text"]
 
 @app.route("/summarise", methods=["POST"])
 def summarise_endpoint():

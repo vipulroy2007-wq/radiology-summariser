@@ -40,7 +40,7 @@ model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_NAME)
 
 args = Seq2SeqTrainingArguments(
     output_dir="./model_output",
-    num_train_epochs=3,           # increase to 5 if score is below 0.3
+    num_train_epochs=3,           
     per_device_train_batch_size=4,
     per_device_eval_batch_size=4,
     warmup_steps=100,
@@ -48,8 +48,8 @@ args = Seq2SeqTrainingArguments(
     eval_strategy="epoch",
     save_strategy="epoch",
     load_best_model_at_end=True,
-    fp16=True,                    # set True if you have a GPU
-    dataloader_pin_memory=False    # disable pin memory on CPU to avoid warning
+    fp16=True,                    
+    dataloader_pin_memory=False   
 )
 
 collator = DataCollatorForSeq2Seq(tokenizer, model=model)

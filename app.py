@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
 from transformers import pipeline
-import os
 
 app = Flask(__name__)
 
@@ -12,12 +11,19 @@ summariser = pipeline(
 )
 print("Model loaded and ready")
 
-def summarise(text, max_length=60, min_length=5):
+def summarise(text):
+    words = text.split()
+    if len(words) > 100:
+        text = " ".join(words[:100])
+    input_length = len(text.split())
+    max_len = min(60, max(10, input_length - 1))
+    min_len = min(5, max_len - 1)
     result = summariser(
         text,
-        max_length=max_length,
-        min_length=min_length,
-        do_sample=False
+        max_length=max_len,
+        min_length=min_len,
+        do_sample=False,
+        num_beams=2
     )
     return result[0]["summary_text"]
 
